@@ -4,3 +4,27 @@ See reflection.md for what makes a good reflection — be specific, use the
 terminology from this assignment (lineage, grain, element function, Series.apply,
 row apply / axis=1, left merge, NaN, coerce, copy-add-return, boolean index,
 export), and make it actionable.
+
+I began this assignment unsure of the different merge/join types and their
+uses. Through this assignment I learned that a left merge keeps every row
+of the left frame, which helped for this assignment because I needed to ensure
+that an employee (who was E099 in this case) that was not on the roster
+would still be included in the payroll. I figured out that the default inner
+merge without how= would not have resulted in an error, and instead would
+have just run and dropped the employee (which means the employee just does
+not get paid). This is what makes the debugging here important.
+
+I used Series.apply in add_hours_worked to turn each value in the hours column
+(like "38h 30m") into a number (38.5), because parse_hours only needs one
+value. I had to alter it for gross pay, since calc_gross_pay needs two values
+from the same row (hours_worked and hourly_rate_usd). So, I used row apply with
+axis=1, which passes the lambda one row at a time instead of whole columns.
+
+I was a bit confused about why every pipeline step needed out = frame.copy(). I
+followed the pattern, but I didn't fully understand why adding a column to out
+without .copy() would also change the caller's DataFrame and break.
+
+To get more comfortable, I plan to review lessons from unit 3 and redo their
+examples. Something I want to try is to predict the row count for each join type
+before running it. I'll also test .copy() myself by making a small DataFrame and
+adding a column to it with and without .copy().
